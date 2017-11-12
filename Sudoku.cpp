@@ -22,13 +22,14 @@ int solveGame(int arr[MAX_SQ][MAX_SQ], int x, int y);
 bool isValid(int arr[MAX_SQ][MAX_SQ], int x, int y, int k);
 bool checkValid(int arr[MAX_SQ][MAX_SQ]);
 void resetArr(int arr[MAX_SQ + 1]);
+bool countRun = 0;
 
 int main() {
     readFile(myArray, INPUT_NAME_FILE);
     cout << "\nInput:";
     logArr(myArray);
     if(checkValid(myArray)){
-        cout << "ok";
+        //cout << "dau vao ok";
         solveGame(myArray, 0, 0);
     } else{
         cout << "Rat tiec khong the giai dc";
@@ -38,6 +39,11 @@ int main() {
 
 int solveGame(int arr[MAX_SQ][MAX_SQ], int row, int col) {
 	int checkResult = -1;
+	bool isFirst = false;
+	if(countRun == 0){
+		countRun = 1;
+		isFirst = true;
+	}
     if (col == MAX_SQ) {
         if (row == MAX_SQ - 1) {
             cout << "\nOutput:";
@@ -62,9 +68,11 @@ int solveGame(int arr[MAX_SQ][MAX_SQ], int row, int col) {
         checkResult = solveGame(arr, row, col + 1);
         if(checkResult == 0) return checkResult;
     }
+    if(isFirst){
+    	cout <<"Khong co loi giai";
+	}
     return -1;
 }
-
 
 void readFile(int arr[MAX_SQ][MAX_SQ], const string &file_name) {
     using namespace std;
@@ -121,17 +129,21 @@ bool isValid(int arr[MAX_SQ][MAX_SQ], int row, int col, int k) {
     return true;
 }
 
-
+//kiem tra mang ban dau
 bool checkValid(int arr[MAX_SQ][MAX_SQ]){
     int arrCheck[MAX_SQ + 1];
+	
+	//check các hàng
     for(int row = 0; row < MAX_SQ; row++){
         resetArr(arrCheck);
         for(int col = 0; col < MAX_SQ; col++){
             if(arr[row][col] < 0 || arr[row][col] > MAX_SQ){
+				//giá trị ko hợp lí.
                 arr[row][col] = 0;
             }
             
             if(arr[row][col] != 0 && arrCheck[arr[row][col]] != 0){
+				//arrCheck[arr[row][col]] != 0 tức là đã tồn tại
                 return false;
             } else {
                 arrCheck[arr[row][col]] = 1;
@@ -139,6 +151,7 @@ bool checkValid(int arr[MAX_SQ][MAX_SQ]){
         }
     }
 
+	//check các cột
     for(int col = 0; col < MAX_SQ; col++){
         resetArr(arrCheck);
         for(int row = 0; row < MAX_SQ; row++){
@@ -151,6 +164,7 @@ bool checkValid(int arr[MAX_SQ][MAX_SQ]){
         }
     }
     
+	//check các ô 3x3
     for(int rowSq = 0; rowSq < 3; ++rowSq ){
         for(int colSq = 0; colSq < 3; ++colSq ){
             resetArr(arrCheck);
@@ -170,6 +184,7 @@ bool checkValid(int arr[MAX_SQ][MAX_SQ]){
     return true;
 }
 
+//đặt lại cái giá trị mảng check về 0
 void resetArr(int arr[MAX_SQ + 1]){
     for(int i = 0; i < MAX_SQ + 1; i++){
         arr[i] = 0;
