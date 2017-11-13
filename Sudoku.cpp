@@ -1,40 +1,22 @@
 #include <iostream>
 #include <fstream>
 
-#define MAX_SQ 9
-//#define NEXT_COL col + 1
-//#define NEXT_ROW row + 1
-#define MAX_SQ 9
-#define INPUT_NAME_FILE "INPUT.TXT"
-#define OUTPUT_NAME_FILE "OUTPUT.TXT"
+#include "Sudoku.h"
 
 using namespace std;
 
-int myArray[MAX_SQ][MAX_SQ];
-void logArr(int arr[MAX_SQ][MAX_SQ]);
-
-void readFile(int arr[MAX_SQ][MAX_SQ], const string &file_name);
-void writeFile(int arr[MAX_SQ][MAX_SQ], const string &out_file_name);
-
-
-int solveGame(int arr[MAX_SQ][MAX_SQ], int x, int y);
-   
-bool isValid(int arr[MAX_SQ][MAX_SQ], int x, int y, int k);
-bool checkValid(int arr[MAX_SQ][MAX_SQ]);
-void resetArr(int arr[MAX_SQ + 1]);
-bool countRun = 0;
-
 int main() {
     readFile(myArray, INPUT_NAME_FILE);
-    cout << "\nInput:";
+//    cout << "\Sudoku_Solve\n\n";
+    cout << "\nInput:\n";
     logArr(myArray);
     if(checkValid(myArray)){
         //cout << "dau vao ok";
-        solveGame(myArray, 0, 0);
+        return solveGame(myArray, 0, 0);
     } else{
         cout << "Rat tiec khong the giai dc";
+        return 1;
     }
-    getchar();
 }
 
 int solveGame(int arr[MAX_SQ][MAX_SQ], int row, int col) {
@@ -46,14 +28,16 @@ int solveGame(int arr[MAX_SQ][MAX_SQ], int row, int col) {
 	}
     if (col == MAX_SQ) {
         if (row == MAX_SQ - 1) {
-            cout << "\nOutput:";
+            cout << "\nOutput:\n";
             logArr(arr);
             writeFile(arr, OUTPUT_NAME_FILE);
             //exit(0);
             return 0;
         } else {
             checkResult = solveGame(arr, row + 1, 0);
-            if(checkResult == 0) return checkResult;
+            if(checkResult == 0){
+			    return checkResult;
+			}
         }
     } else if (arr[row][col] == 0) {
         for (int k = 1; k <= MAX_SQ; k++) {
@@ -71,7 +55,7 @@ int solveGame(int arr[MAX_SQ][MAX_SQ], int row, int col) {
     if(isFirst){
     	cout <<"Khong co loi giai";
 	}
-    return -1;
+    return 1;
 }
 
 void readFile(int arr[MAX_SQ][MAX_SQ], const string &file_name) {
@@ -84,19 +68,25 @@ void readFile(int arr[MAX_SQ][MAX_SQ], const string &file_name) {
                 file >> arr[row][col];
             }
         }
+        file.close();
     }
-    file.close();
 }
 
 void logArr(int arr[MAX_SQ][MAX_SQ]) {
     cout << "\n";
 
     for (int row = 0; row < MAX_SQ; ++row) {
+    	cout << " | ";
         for (int col = 0; col < MAX_SQ; ++col) {
-            cout << myArray[row][col] << "|";
+            cout << myArray[row][col];
+            if(col % 3 == 2){
+            	cout << " | ";
+            } else{
+            	cout << "|";
+			}
         }
         if (row % 3 == 2) {
-            cout << "\n------------------";
+            cout << "\n  -----------------------";
         }
         cout << "\n";
     }
