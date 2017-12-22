@@ -12,9 +12,14 @@ int main() {
     logArr(myArray);
     if(checkValid(myArray)){
         //cout << "dau vao ok";
-        return solveGame(myArray, 0, 0);
+        int out = solveGame(myArray, 0, 0);
+    
+        getchar();
+	    return out;
     } else{
         cout << "Rat tiec khong the giai dc";
+        
+    	getchar();
         return 1;
     }
 }
