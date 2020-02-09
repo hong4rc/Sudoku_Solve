@@ -82,6 +82,10 @@ void SudokuSolver::Solve()
 	{
 		SaveFile();
 	}
+	else
+	{
+		cout << "Can't solve this board!!!";
+	}
 }
 
 bool SudokuSolver::IsValid() const
