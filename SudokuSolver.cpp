@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "SudokuSolver.h"
 
 using namespace std;
@@ -196,7 +196,7 @@ void SudokuSolver::ResetCheckArray() const
 {
 	for (auto i = 0; i < SQUARE_LENGTH; ++i)
 	{
-		checkArray[i] = 0;
+		checkArray[i + 1] = 0;
 	}
 }
 
