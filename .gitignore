@@ -27,3 +27,6 @@ bld/
 # Visual C++ cache files
 *.opensdf
 *.sdf
+
+# Visual Studio cache/options directory
+.vs/
