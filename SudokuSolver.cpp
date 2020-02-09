@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include "SudokuSolver.h"
 
 using namespace std;
@@ -170,8 +170,8 @@ bool SudokuSolver::IsValidMiniSquare(int sRow, int sCol) const
 	sCol *= MINI_SQUARE_LENGTH;
 	for (auto i = 0; i < SQUARE_LENGTH; ++i)
 	{
-		const auto offetRow = i % MINI_SQUARE_LENGTH;
-		const auto offetCol = i / MINI_SQUARE_LENGTH;
+		const auto offetRow = i / MINI_SQUARE_LENGTH;
+		const auto offetCol = i % MINI_SQUARE_LENGTH;
 		const auto index = data[sRow + offetRow][sCol + offetCol];
 		if (checkArray[index] <= 0)
 		{
