@@ -7,6 +7,7 @@ int main()
     ifstream inputFile("input.txt", fstream::in);
     Sudoku sudoku(&inputFile);
     SudokuSolver::solve(sudoku);
+    cout << sudoku;
     system("pause");
     return 0;
 }

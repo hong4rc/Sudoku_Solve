@@ -22,8 +22,7 @@ bool SudokuSolver::checkPosition(Sudoku& board, int row, int col)
     }
     if (row == Sudoku::SQUARE_LENGTH)
     {
-        cout << "Done!!!" << endl;
-        cout << board;
+        board.capture();
         return true;
     }
     if (board.at(row, col) == 0)
@@ -34,10 +33,7 @@ bool SudokuSolver::checkPosition(Sudoku& board, int row, int col)
             if (board.isValidCol(col) && board.isValidRow(row)
                 && board.isValidMiniSquare(row - row % Sudoku::MINI_SQUARE_LENGTH, col - col % Sudoku::MINI_SQUARE_LENGTH))
             {
-                if (checkPosition(board, row, col + 1))
-                {
-                    return true;
-                }
+                checkPosition(board, row, col + 1);
             }
         }
         board.at(row, col) = 0;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <list>
 
 using namespace std;
 
@@ -15,12 +16,14 @@ public:
     bool isValidRow(const int);
     bool isValidCol(const int);
     bool isValidMiniSquare(const int, const int);
+    void capture();
 
     static const int MINI_SQUARE_LENGTH = 3;
     static const int SQUARE_LENGTH = MINI_SQUARE_LENGTH * MINI_SQUARE_LENGTH;
     friend ostream& operator << (ostream& out, const Sudoku& c);
 private:
     int* data;
+    list<int*> *results;
     int check1to9[SQUARE_LENGTH] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     void resetCheck();
     static void nextRow(int& row, int& col);

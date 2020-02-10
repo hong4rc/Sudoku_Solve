@@ -1,9 +1,11 @@
 #include <iostream>
+#include <list>
 #include "Sudoku.h"
 #include "SudokuSolver.h"
 
 Sudoku::Sudoku(ifstream* inputFile)
 {
+    results = new list<int*>();
     this->data = new int[SQUARE_LENGTH * SQUARE_LENGTH];
     if (inputFile->is_open())
     {
@@ -33,6 +35,11 @@ Sudoku::Sudoku(ifstream* inputFile)
 Sudoku::~Sudoku()
 {
     delete[] this->data;
+    for (auto result : *results)
+    {
+        delete[] result;
+    }
+    delete results;
 }
 
 int& Sudoku::at(int row, int col) const
@@ -108,6 +115,20 @@ bool Sudoku::isValidMiniSquare(const int row, const int col)
     return isValid(nextSquare, row, col);
 }
 
+void Sudoku::capture()
+{
+    if (!isValid())
+    {
+        throw std::exception("Can't capture with invalid board");
+    }
+    int* tmp = new int[SQUARE_LENGTH * SQUARE_LENGTH];
+    for (auto i = 0; i < SQUARE_LENGTH * SQUARE_LENGTH; ++i)
+    {
+        tmp[i] = data[i];
+    }
+    results->push_back(tmp);
+}
+
 void Sudoku::resetCheck()
 {
     memset(check1to9, 0, sizeof(check1to9));
@@ -133,29 +154,34 @@ void Sudoku::nextSquare(int& row, int& col)
     }
 }
 
-ostream& operator<<(ostream& out, const Sudoku& c)
+ostream& operator<<(ostream& out, const Sudoku& board)
 {
-    out << endl;
-    for (auto row = 0; row < Sudoku::SQUARE_LENGTH; ++row)
+    out << "Found " << board.results->size() << " result" << endl;
+    int i = 0;
+    for (auto result : *board.results)
     {
-        out << " | ";
-        for (auto col = 0; col < Sudoku::SQUARE_LENGTH; ++col)
+        out << "result " << ++i << endl;
+        for (auto row = 0; row < Sudoku::SQUARE_LENGTH; ++row)
         {
-            out << c.at(row, col);
-            if (col % 3 == 2)
+            out << " | ";
+            for (auto col = 0; col < Sudoku::SQUARE_LENGTH; ++col)
             {
-                cout << " | ";
+                out << result[row * Sudoku::SQUARE_LENGTH + col];
+                if (col % 3 == 2)
+                {
+                    out << " | ";
+                }
+                else
+                {
+                    out << "|";
+                }
             }
-            else
+            if (row % 3 == 2)
             {
-                out << "|";
+                out << "\n  -----------------------";
             }
+            out << "\n";
         }
-        if (row % 3 == 2)
-        {
-            out << "\n  -----------------------";
-        }
-        out << "\n";
     }
     return out;
 }
