@@ -5,7 +5,7 @@
 class SudokuSolver
 {
 public:
-    static void solve(Sudoku&, int limit = 300);
+    static int solve(Sudoku&, int limit = 300);
 private:
     static bool checkPosition(Sudoku&, int, int);
 };

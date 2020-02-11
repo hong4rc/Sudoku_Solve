@@ -11,6 +11,7 @@ public:
     Sudoku(ifstream*);
     ~Sudoku();
     int& at(int, int) const;
+    int& at(int) const;
     bool isValid();
     bool isValid(void(*next)(int&, int&), int row, int col);
     bool isValidRow(const int);
@@ -20,6 +21,8 @@ public:
     void setLimit(int);
     int getLimit();
     bool isFull();
+    void clear();
+    int count();
 
     static const int MINI_SQUARE_LENGTH = 3;
     static const int SQUARE_LENGTH = MINI_SQUARE_LENGTH * MINI_SQUARE_LENGTH;

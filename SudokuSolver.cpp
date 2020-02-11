@@ -3,15 +3,17 @@
 
 using namespace std;
 
-void SudokuSolver::solve(Sudoku& board, int limit)
+int SudokuSolver::solve(Sudoku& board, int limit)
 {
+    board.clear();
     if (!board.isValid())
     {
         cout << "Your input invalid!!!";
-        return;
+        return 0;
     }
     board.setLimit(limit);
     checkPosition(board, 0, 0);
+    return board.count();
 }
 
 bool SudokuSolver::checkPosition(Sudoku& board, int row, int col)

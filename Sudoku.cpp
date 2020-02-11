@@ -35,16 +35,18 @@ Sudoku::Sudoku(ifstream* inputFile)
 Sudoku::~Sudoku()
 {
     delete[] this->data;
-    for (auto result : *results)
-    {
-        delete[] result;
-    }
+    this->clear();
     delete results;
 }
 
 int& Sudoku::at(int row, int col) const
 {
-    return this->data[row * SQUARE_LENGTH + col];
+    return this->at(row * SQUARE_LENGTH + col);
+}
+
+int& Sudoku::at(int index) const
+{
+    return this->data[index];
 }
 
 bool Sudoku::isValid()
@@ -152,6 +154,20 @@ int Sudoku::getLimit()
 bool Sudoku::isFull()
 {
     return limit != 0 && results->size() >= limit;
+}
+
+void Sudoku::clear()
+{
+    for (auto result : *results)
+    {
+        delete[] result;
+    }
+    results->clear();
+}
+
+int Sudoku::count()
+{
+    return results->size();
 }
 
 void Sudoku::nextRow(int& row, int& col)
