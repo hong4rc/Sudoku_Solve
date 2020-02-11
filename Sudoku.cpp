@@ -192,6 +192,29 @@ void Sudoku::nextSquare(int& row, int& col)
 
 ostream& operator<<(ostream& out, const Sudoku& board)
 {
+    out << "Data:" << endl;
+    for (auto row = 0; row < Sudoku::SQUARE_LENGTH; ++row)
+    {
+        out << " | ";
+        for (auto col = 0; col < Sudoku::SQUARE_LENGTH; ++col)
+        {
+            out << board.data[row * Sudoku::SQUARE_LENGTH + col];
+            if (col % 3 == 2)
+            {
+                out << " | ";
+            }
+            else
+            {
+                out << "|";
+            }
+        }
+        if (row % 3 == 2)
+        {
+            out << "\n  -----------------------";
+        }
+        out << "\n";
+    }
+
     out << "Found " << board.results->size() << " result" << endl;
     int i = 0;
     for (auto result : *board.results)
