@@ -50,6 +50,10 @@ void minify(Sudoku& sudoku)
     {
         int j = positions[i];
         int val = sudoku.at(j);
+        if (val == 0)
+        {
+            continue;
+        }
         sudoku.at(j) = 0;
         if (SudokuSolver::solve(sudoku, 2) > 1)
         {
