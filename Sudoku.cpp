@@ -134,6 +134,26 @@ void Sudoku::resetCheck()
     memset(check1to9, 0, sizeof(check1to9));
 }
 
+void Sudoku::setLimit(int limit)
+{
+    // set limit=0 to don't use limit
+    if (limit < 0)
+    {
+        throw exception("Please set limit >= 0");
+    }
+    this->limit = limit;
+}
+
+int Sudoku::getLimit()
+{
+    return this->limit;
+}
+
+bool Sudoku::isFull()
+{
+    return limit != 0 && results->size() >= limit;
+}
+
 void Sudoku::nextRow(int& row, int& col)
 {
     ++row;
