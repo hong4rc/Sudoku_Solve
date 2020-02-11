@@ -40,7 +40,7 @@ bool SudokuSolver::checkPosition(Sudoku& board, int row, int col)
                     found = true;
                     if (board.isFull())
                     {
-                        return found;
+                        break;
                     }
                 }
             }
