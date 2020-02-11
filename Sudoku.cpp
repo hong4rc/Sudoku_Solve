@@ -131,6 +131,15 @@ void Sudoku::capture()
     results->push_back(tmp);
 }
 
+void Sudoku::saveResult(int iResult)
+{
+    auto pResult = next(results->begin(), iResult);
+    for (auto i = 0; i < SQUARE_LENGTH * SQUARE_LENGTH; ++i)
+    {
+        data[i] = (*pResult)[i];
+    }
+}
+
 void Sudoku::resetCheck()
 {
     memset(check1to9, 0, sizeof(check1to9));

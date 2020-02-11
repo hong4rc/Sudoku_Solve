@@ -18,6 +18,7 @@ public:
     bool isValidCol(const int);
     bool isValidMiniSquare(const int, const int);
     void capture();
+    void saveResult(int i = 0);
     void setLimit(int);
     int getLimit();
     bool isFull();
