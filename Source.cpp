@@ -18,7 +18,16 @@ void solve(Sudoku& sudoku)
 
 void minify(Sudoku& sudoku)
 {
-    ofstream outputFile("output.txt", fstream::out);
+    //ofstream outputFile("output.txt", fstream::out);
+    int count = SudokuSolver::solve(sudoku, 2);
+    if (count == 0)
+    {
+        throw runtime_error("Can't solve this sudoku board");
+    }
+    if (count != 1)
+    {
+        sudoku.saveResult();
+    }
     int size = Sudoku::SQUARE_LENGTH * Sudoku::SQUARE_LENGTH;
 
     int positions[Sudoku::SQUARE_LENGTH * Sudoku::SQUARE_LENGTH];
@@ -56,6 +65,7 @@ int main()
     srand(time(NULL));
     ifstream inputFile("input.txt", fstream::in);
     Sudoku sudoku(&inputFile);
+    //solve(sudoku);
     minify(sudoku);
     system("pause");
     return 0;
